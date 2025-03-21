@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Social Bloom</title>
+
+    <link rel="icon" type="image/png" href="assets/images/img3.png">
+
+    <link rel="stylesheet" href="css/utils.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/media-queries.css">
+
+</head>
+
+<body>
+    <div class="wrapper">
+        <header id="home" class="max-width  padding-x">
+            <nav class="navbar flex">
+                <div class="logo-box">
+                    <h1 class="logo">SOCIAL <span class="red">BLOOM</span></h1>
+                </div>
+                <input type="checkbox" id="checkbox">
+                <div class="menubar">
+                    <ul class="flex">
+                        <li><a href="#home">Startseite</a></li>
+                        <li><a href="#about">Über uns</a></li>
+                        <li><a href="#services">Dienstleistungen</a></li>
+                        <li><a href="#contact">Kontakt</a></li>
+                    </ul>
+                </div>
+
+            </nav>
+            <section class="banner flex">
+                <div class="banner-left">
+                    <h1>Social Bloom<br><br></h1>
+                    <p>Ihre Agentur für erfolgreiches Social Media Marketing</p>
+                    <a href="#about"><button class="common-btn">Mehr erfahren</button></a>
+                    <a href="#contact"><button class="common-btn-2">Kontakt aufnehmen</button></a>
+                </div>
+                <div class="banner-right">
+                    <img src="assets/images/img3.png" alt="Banner-Bild">
+                </div>
+            </section>
+        </header>
+        <section id="services" class="max-width padding-y padding-x">
+            <div class="section-header">
+                <h1>Dienstleistungen</h1>
+                <span>&#8902</span>
+            </div>
+            <div class="services-row flex">
+
+                <div class="service-col-1">
+                    <h1>Wir helfen Ihnen, Ihr Business auf Social Media zu skalieren</h1>
+                    <button class="common-btn">Jetzt entdecken</button>
+                </div>
+
+                <div class="service-col">
+                    <div class="service-col-img-box flex">
+                        <img src="assets/images/icon3.png" alt="">
+                    </div>
+                    <h2>Kurzvideo-Kreation</h2>
+                    <p>Wir unterstützen Sie bei der Erstellung von ansprechenden Kurzvideos. Unsere Videos sind darauf ausgerichtet, Ihre Zielgruppe effektiv zu erreichen. So steigern Sie Ihre Reichweite und gewinnen mehr Neukunden.</p>
+                </div>
+                
+
+
+        </section>
+        <section id="about" class="max-width padding-y padding-x">
+            <div class="section-header">
+                <h1>Über uns</h1>
+                <span>&#8902</span>
+            </div>
+
+            <div class="about-row flex">
+                <div class="about-left">
+                    <img src="assets/images/img1.png" alt="">
+                </div>
+                <div class="about-right">
+                    <h2>Ein paar Worte <br> über uns</h2>
+                    <p>Social Bloom ist eine Social Media Marketing Agentur, die dabei hilft, Ihre Online-Präsenz und Markenbekanntheit zu steigern. Mit individuellen Strategien unterstützen wir Unternehmen dabei, auf Plattformen wie Instagram, Facebook und TikTok sichtbarer zu werden. Wir bieten Services wie Content Creation, Influencer-Marketing, bezahlte Werbung und mehr. Lassen Sie uns Ihre Social-Media-Strategie in echte Geschäftserfolge umwandeln.</p>
+                </div>
+
+            </div>
+
+        </section>
+
+        </section>
+
+
+        <section id="contact" class="max-width padding-y padding-x">
+            <div class="section-header">
+                <h1>Kontaktieren Sie uns</h1>
+                <span>&#8902;</span>
+            </div>
+        
+            <h1>Kontakt aufnehmen</h1>
+            <div class="contact-row flex">
+                <input id="name" type="text" placeholder="Geben Sie Ihren Namen ein">
+                <input id="email" type="text" placeholder="Geben Sie Ihre E-Mail ein">
+                <textarea id="details" cols="30" rows="5" placeholder="Geben Sie Details ein"></textarea>
+            </div>
+            <button class="common-btn-2" onclick="submitToDiscordWebhook()">Senden</button>
+        
+            <div id="responseMessage" class="response-message" style="display:none;"></div>
+        </section>
+        
+        <style>
+            .response-message {
+                margin-top: 20px;
+                padding: 10px;
+                background-color: #4CAF50;
+                color: white;
+                text-align: center;
+                border-radius: 5px;
+            }
+        </style>
+        
+        <script>
+            function submitToDiscordWebhook() {
+                const name = document.getElementById('name').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const details = document.getElementById('details').value.trim();
+        
+                if (!name || !email || !details) {
+                    showMessage("Bitte füllen Sie alle Felder aus", false);
+                    return;
+                }
+        
+                const payload = {
+                    content: `Name: ${name}\nEmail: ${email}\nDetails: ${details}`
+                };
+        
+                const webhookURL = 'https://discord.com/api/webhooks/1312605610906488892/5-Td7Ym3zt7oLkE-47v-dFPvGQSGfVtgGN-NfnI1RDDFjHVeNAXByvk6yrRoZNMRMw4h';
+        
+                fetch(webhookURL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                })
+                .then(response => {
+                    if (response.ok) {
+                        showMessage("Ihre Nachricht wurde erfolgreich gesendet", true);
+                        clearForm();
+                    } else {
+                        showMessage("Fehler beim Senden der Nachricht. Bitte versuchen Sie es später erneut", false);
+                    }
+                })
+                .catch(error => {
+                    console.error("Fehler:", error);
+                    showMessage("Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut", false);
+                });
+            }
+        
+            function showMessage(message, isSuccess) {
+                const responseMessage = document.getElementById('responseMessage');
+                responseMessage.textContent = message;
+                responseMessage.style.backgroundColor = isSuccess ? '#4CAF50' : '#F44336';
+                responseMessage.style.display = 'block';
+            }
+        
+            function clearForm() {
+                document.getElementById('name').value = "";
+                document.getElementById('email').value = "";
+                document.getElementById('details').value = "";
+            }
+        </script>
+        
+        
+        <footer class="padding-x">
+            <h1>Social Bloom</h1>
+            <p>&copy; Social Bloom 2025<br>Tel.: 04915118764020</p>
+        </footer>
+    </div>
+</body>
+
+</html>
